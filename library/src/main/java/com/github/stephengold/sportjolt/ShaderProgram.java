@@ -564,8 +564,10 @@ class ShaderProgram {
         Utils.checkForOglError();
     }
 
+    /**
+     * Link the program object.
+     */
     private void linkProgram() {
-        // Link the program object.
         GL20C.glLinkProgram(programId);
         Utils.checkForOglError();
         int success = GL20C.glGetProgrami(programId, GL20C.GL_LINK_STATUS);
