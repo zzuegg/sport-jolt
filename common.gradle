@@ -1,0 +1,16 @@
+// Gradle settings and tasks common to all Sport-Jolt subprojects
+
+apply plugin: 'java'       // to compile and test Java projects
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType(JavaCompile).configureEach { // Java compile-time options:
+    options.compilerArgs << '-Xdiags:verbose'
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true // to provide detailed deprecation warnings
+    options.encoding = 'UTF-8'
+    options.release = 11
+}

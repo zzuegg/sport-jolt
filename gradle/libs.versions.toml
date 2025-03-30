@@ -1,0 +1,25 @@
+## catalog of libraries and plugins used to build the Sport-Jolt project
+
+[versions]
+
+joltjni = "0.9.8"
+lwjgl = "3.3.6"
+
+[libraries]
+
+jolt-jni-windows64 = { module = "com.github.stephengold:jolt-jni-Windows64", version.ref = "joltjni" }
+
+joml = "org.joml:joml:1.10.8"
+jsnaploader = "io.github.electrostat-lab:snaploader:1.1.1-stable"
+log4j-impl = "org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3"
+oshi-core = "com.github.oshi:oshi-core:6.8.0"
+
+lwjgl = { module = "org.lwjgl:lwjgl", version.ref = "lwjgl" }
+lwjgl-assimp = { module = "org.lwjgl:lwjgl-assimp", version.ref = "lwjgl" }
+lwjgl-bom = { module = "org.lwjgl:lwjgl-bom", version.ref = "lwjgl" }
+lwjgl-glfw = { module = "org.lwjgl:lwjgl-glfw", version.ref = "lwjgl" }
+lwjgl-opengl = { module = "org.lwjgl:lwjgl-opengl", version.ref = "lwjgl" }
+
+[bundles]
+
+[plugins]

@@ -1,0 +1,13 @@
+// Gradle script to build the Sport-Jolt project
+
+ext {
+    sjVersion = '0.9.0-SNAPSHOT'
+}
+
+subprojects {
+    apply from: rootProject.file('common.gradle')
+}
+
+configurations.configureEach {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds' // to disable caching of snapshots
+}
