@@ -11,7 +11,7 @@ Complete source code (in [Java]) is provided under
 ## Contents of this document
 
 + [About Sport Jolt](#about)
-+ [How to add Sport Jolt to an existing project](#add)
++ [Coding a Sport-Jolt application](#add)
 + [How to build and run Sport Jolt from source](#build)
 + [Conventions](#conventions)
 
@@ -20,11 +20,11 @@ Complete source code (in [Java]) is provided under
 
 ## About Sport Jolt
 
-Sport Jolt is a Simple Physics-ORienTed graphics engine for [Jolt JNI],
+Sport Jolt is a Simple Physics-ORienTed graphics engine for [Jolt JNI][joltjni],
 written in Java 11.
 In addition to Jolt JNI,
 it uses [LWJGL], [GLFW], [JOML], [jSnapLoader], and [OpenGL].
-It has been tested on Linux.
+It has been tested on [Linux].
 
 [Jump to the table of contents](#toc)
 
@@ -140,9 +140,11 @@ The world coordinate system is assumed to be Z-forward, Y-up.
 [glfw]: https://www.glfw.org "GLFW Library"
 [gradle]: https://gradle.org "Gradle Project"
 [java]: https://en.wikipedia.org/wiki/Java_(programming_language) "Java programming language"
+[joltjni]: https://github.com/stephengold/jolt-jni "Jolt JNI Project"
 [joml]: https://joml-ci.github.io/JOML "Java OpenGL Math Library"
-[jsnaploader]: https://github.com/Electrostat-Lab/jSnapLoader "the jSnapLoader Project"
+[jsnaploader]: https://github.com/Electrostat-Lab/jSnapLoader "jSnapLoader Project"
 [license]: https://github.com/stephengold/sport-jolt/blob/master/LICENSE "Sport-Jolt license"
+[linux]: https://www.linux.com/what-is-linux "Linux"
 [lwjgl]: https://www.lwjgl.org "Lightweight Java Game Library"
 [maven]: https://maven.apache.org "Maven Project"
 [opengl]: https://www.khronos.org/opengl "OpenGL API"
