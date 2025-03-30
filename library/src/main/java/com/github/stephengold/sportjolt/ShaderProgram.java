@@ -35,9 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import org.joml.Matrix3fc;
 import org.joml.Matrix4fc;
-import org.joml.Vector3fc;
 import org.joml.Vector4fc;
 import org.lwjgl.opengl.GL11C;
 import org.lwjgl.opengl.GL20C;
@@ -155,26 +153,6 @@ class ShaderProgram {
             GL20C.glDeleteProgram(programId);
             Utils.checkForOglError();
         }
-    }
-
-    /**
-     * Return the number of active GLOBAL uniforms.
-     *
-     * @return the count (&ge;0)
-     */
-    int countGlobalUniforms() {
-        int count = globalUniforms.size();
-        return count;
-    }
-
-    /**
-     * Return the number of active uniforms.
-     *
-     * @return the count (&ge;0)
-     */
-    int countUniforms() {
-        int count = uniformLocations.size();
-        return count;
     }
 
     /**
@@ -301,28 +279,6 @@ class ShaderProgram {
     }
 
     /**
-     * Set the value of a mat3 uniform variable.
-     *
-     * @param uniformName the name of the uniform to specify (not null, not
-     * empty)
-     * @param value the desired value (not null)
-     */
-    void setUniform(String uniformName, Matrix3fc value) {
-        assert uniformName != null;
-        int location = uniformLocations.get(uniformName);
-
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            FloatBuffer buffer = stack.mallocFloat(9);
-            value.get(buffer);
-
-            use();
-            boolean transpose = false;
-            GL20C.glUniformMatrix3fv(location, transpose, buffer);
-            Utils.checkForOglError();
-        }
-    }
-
-    /**
      * Set the value of a mat4 uniform variable.
      *
      * @param uniformName the name of the uniform to specify (not null, not
@@ -360,27 +316,6 @@ class ShaderProgram {
             value.put(buffer);
             buffer.flip();
             assert buffer.limit() == buffer.capacity();
-
-            use();
-            GL20C.glUniform3fv(location, buffer);
-            Utils.checkForOglError();
-        }
-    }
-
-    /**
-     * Set the value of a vec3 uniform variable using a JOML Vector3f.
-     *
-     * @param uniformName the name of the uniform to specify (not null, not
-     * empty)
-     * @param value the desired value (not null)
-     */
-    void setUniform(String uniformName, Vector3fc value) {
-        assert uniformName != null;
-        int location = uniformLocations.get(uniformName);
-
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            FloatBuffer buffer = stack.mallocFloat(3);
-            value.get(buffer);
 
             use();
             GL20C.glUniform3fv(location, buffer);
