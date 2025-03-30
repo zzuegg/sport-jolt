@@ -1,10 +1,15 @@
 // Gradle settings and tasks common to all Sport-Jolt subprojects
 
+apply plugin: 'checkstyle' // to analyze Java sourcecode for style violations
 apply plugin: 'java'       // to compile and test Java projects
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+checkstyle {
+    toolVersion = libs.versions.checkstyle.get()
 }
 
 tasks.withType(JavaCompile).configureEach { // Java compile-time options:
