@@ -111,21 +111,22 @@ public class Camera {
      * @return a location vector in worldspace (either {@code storeResult} or a
      * new vector)
      */
-    public Vec3 clipToWorld(Vector2fc clipXy, float clipZ, Vec3 storeResult) {
+    public Vector3f clipToWorld(
+            Vector2fc clipXy, float clipZ, Vector3f storeResult) {
+        Vector3f result = storeResult == null ? new Vector3f() : storeResult;
         Projection projection = BaseApplication.getProjection();
-        Vec3 cameraXyz = projection.clipToCamera(clipXy, clipZ, storeResult);
+        Vector3fc cameraXyz = projection.clipToCamera(clipXy, clipZ, result);
 
-        float right = cameraXyz.getX();
-        float up = cameraXyz.getY();
-        float forward = -cameraXyz.getZ();
+        float right = cameraXyz.x();
+        float up = cameraXyz.y();
+        float forward = -cameraXyz.z();
 
-        Vector3f worldXyz
-                = new Vector3f(eyeLocation.x, eyeLocation.y, eyeLocation.z);
-        worldXyz.fma(right, rightDirection);
-        worldXyz.fma(up, upDirection);
-        worldXyz.fma(forward, lookDirection);
+        result.set(eyeLocation.x, eyeLocation.y, eyeLocation.z);
+        result.fma(right, rightDirection);
+        result.fma(up, upDirection);
+        result.fma(forward, lookDirection);
 
-        return Utils.toJoltVector(worldXyz);
+        return result;
     }
 
     /**

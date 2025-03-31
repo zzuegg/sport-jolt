@@ -32,6 +32,7 @@ import com.github.stephengold.joltjni.Jolt;
 import com.github.stephengold.joltjni.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector2fc;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 /**
@@ -147,7 +148,8 @@ public class Projection extends GlobalUniform {
      * @return a location vector in cameraspace (either {@code storeResult} or a
      * new vector)
      */
-    public Vec3 clipToCamera(Vector2fc clipXy, float clipZ, Vec3 storeResult) {
+    public Vector3f clipToCamera(
+            Vector2fc clipXy, float clipZ, Vector3f storeResult) {
         // invert the camera-to-clip transform matrix
         updateValue();
         Matrix4f inverse = new Matrix4f();
@@ -158,7 +160,7 @@ public class Projection extends GlobalUniform {
         hom.div(hom.w);
 
         if (storeResult == null) {
-            return new Vec3(hom.x, hom.y, hom.z);
+            return new Vector3f(hom.x, hom.y, hom.z);
         } else {
             storeResult.set(hom.x, hom.y, hom.z);
             return storeResult;

@@ -201,13 +201,13 @@ final public class Utils {
      * @return the interpolated value (either {@code storeResult} or a new
      * instance)
      */
-    public static Vec3 lerp(
-            float t, Vec3Arg v0, Vec3Arg v1, Vec3 storeResult) {
-        Vec3 result = (storeResult == null) ? new Vec3() : storeResult;
+    public static Vector3f lerp(
+            float t, Vector3fc v0, Vector3fc v1, Vector3f storeResult) {
+        Vector3f result = (storeResult == null) ? new Vector3f() : storeResult;
 
-        float x = lerp(t, v0.getX(), v1.getX());
-        float y = lerp(t, v0.getY(), v1.getY());
-        float z = lerp(t, v0.getZ(), v1.getZ());
+        float x = lerp(t, v0.x(), v1.x());
+        float y = lerp(t, v0.y(), v1.y());
+        float z = lerp(t, v0.z(), v1.z());
         result.set(x, y, z);
 
         return result;
