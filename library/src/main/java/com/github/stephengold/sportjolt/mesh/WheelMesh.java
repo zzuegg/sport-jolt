@@ -29,6 +29,7 @@
 package com.github.stephengold.sportjolt.mesh;
 
 import com.github.stephengold.joltjni.Jolt;
+import com.github.stephengold.sportjolt.Constants;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.Topology;
 import com.github.stephengold.sportjolt.VertexBuffer;
@@ -55,7 +56,7 @@ public class WheelMesh extends Mesh {
         // circle
         int numCircleEdges = numEdges - 3;
         float radius = 1f;
-        float thetaStep = 2f * Jolt.JPH_PI / numCircleEdges;
+        float thetaStep = Constants.twoPi / numCircleEdges;
         for (int edgeIndex = 0; edgeIndex < numCircleEdges; ++edgeIndex) {
             float theta = thetaStep * edgeIndex;
             putPolarYZ(positionBuffer, radius, theta);

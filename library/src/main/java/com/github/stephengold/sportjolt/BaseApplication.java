@@ -28,7 +28,6 @@
  */
 package com.github.stephengold.sportjolt;
 
-import com.github.stephengold.joltjni.Jolt;
 import com.github.stephengold.sportjolt.blend.BlendOp;
 import com.github.stephengold.sportjolt.input.CameraInputProcessor;
 import com.github.stephengold.sportjolt.input.InputManager;
@@ -70,7 +69,7 @@ abstract public class BaseApplication {
      * origin)
      */
     final protected static Camera cam
-            = new Camera(new Vector3f(0f, 0f, 10f), -0.5f * Jolt.JPH_PI, 0f);
+            = new Camera(new Vector3f(0f, 0f, 10f), -Constants.halfPi, 0f);
     /**
      * process user input to control the camera
      */

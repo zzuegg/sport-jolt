@@ -29,6 +29,7 @@
 package com.github.stephengold.sportjolt.mesh;
 
 import com.github.stephengold.joltjni.Jolt;
+import com.github.stephengold.sportjolt.Constants;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.Topology;
 import com.github.stephengold.sportjolt.Validate;
@@ -85,7 +86,7 @@ public class LoopMesh extends Mesh {
 
         VertexBuffer positionBuffer = super.createPositions();
 
-        float increment = 2f * Jolt.JPH_PI / numLines;
+        float increment = Constants.twoPi / numLines;
         for (int vertexIndex = 0; vertexIndex < numLines; ++vertexIndex) {
             float theta = increment * vertexIndex;
             float x = xRadius * Jolt.cos(theta);

@@ -28,7 +28,6 @@
  */
 package com.github.stephengold.sportjolt;
 
-import com.github.stephengold.joltjni.Jolt;
 import com.github.stephengold.joltjni.Quat;
 import com.github.stephengold.joltjni.Vec3;
 import com.github.stephengold.joltjni.operator.Op;
@@ -515,7 +514,7 @@ public class Mesh {
                 case Spherical:
                     Utils.toSpherical(tmpVector);
                     tmpVector.scaleInPlace(
-                            1f, 1f / Jolt.JPH_PI, 1f / Jolt.JPH_PI);
+                            1f, Constants.invPi, Constants.invPi);
                     break;
                 default:
                     throw new IllegalArgumentException("option = " + option);

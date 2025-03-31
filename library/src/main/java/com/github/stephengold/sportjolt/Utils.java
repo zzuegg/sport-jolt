@@ -55,13 +55,6 @@ import org.lwjgl.opengl.GL20C;
  */
 final public class Utils {
     // *************************************************************************
-    // constants
-
-    /**
-     * 2*Pi
-     */
-    final private static float twoPi = (float) (2 * Math.PI);
-    // *************************************************************************
     // constructors
 
     /**
@@ -400,9 +393,9 @@ final public class Utils {
     public static float standardizeAngle(float angle) {
         assert Float.isFinite(angle);
 
-        float result = modulo(angle, twoPi);
+        float result = modulo(angle, Constants.twoPi);
         if (result >= Jolt.JPH_PI) {
-            result -= twoPi;
+            result -= Constants.twoPi;
         }
 
         assert result >= -Jolt.JPH_PI : result;

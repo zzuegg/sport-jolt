@@ -29,6 +29,7 @@
 package com.github.stephengold.sportjolt.mesh;
 
 import com.github.stephengold.joltjni.Jolt;
+import com.github.stephengold.sportjolt.Constants;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.Topology;
 import com.github.stephengold.sportjolt.Validate;
@@ -105,7 +106,7 @@ public class ArrowMesh extends Mesh {
             case Jolt.SWIZZLE_X:
                 if (xArrow == null) {
                     xArrow = new ArrowMesh();
-                    xArrow.rotate(0f, 0.5f * Jolt.JPH_PI, 0f);
+                    xArrow.rotate(0f, Constants.halfPi, 0f);
                     xArrow.makeImmutable();
                 }
                 return xArrow;
@@ -113,7 +114,7 @@ public class ArrowMesh extends Mesh {
             case Jolt.SWIZZLE_Y:
                 if (yArrow == null) {
                     yArrow = new ArrowMesh();
-                    yArrow.rotate(-0.5f * Jolt.JPH_PI, 0f, 0f);
+                    yArrow.rotate(-Constants.halfPi, 0f, 0f);
                     yArrow.makeImmutable();
                 }
                 return yArrow;
