@@ -1,0 +1,140 @@
+// Gradle script to build the "java-apps" subproject of Sport Jolt
+
+// Note: "common.gradle" in the root project contains additional initialization
+//   for this project. This initialization is applied in the "build.gradle"
+//   of the root project.
+
+plugins {
+    id 'application' // to build JVM applications
+}
+
+// Register tasks to run specific applications:
+
+// non-physics tests apps in Java
+tasks.register('AssimpTest', JavaExec) {
+    description = 'Runs the Assimp test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.AssimpTest'
+}
+tasks.register('CheckerboardTest', JavaExec) {
+    description = 'Runs the checkerboard test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.CheckerboardTest'
+}
+tasks.register('ClipspaceTest', JavaExec) {
+    description = 'Runs the clipspace test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.ClipspaceTest'
+}
+tasks.register('DynamicMeshTest', JavaExec) {
+    description = 'Runs the dynamic-mesh test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.DynamicMeshTest'
+}
+tasks.register('IcosphereTest', JavaExec) {
+    description = 'Runs the icosphere test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.IcosphereTest'
+}
+tasks.register('MouseTest', JavaExec) {
+    description = 'Runs the first mouse test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.MouseTest'
+}
+tasks.register('MouseTest2', JavaExec) {
+    description = 'Runs the 2nd mouse test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.MouseTest2'
+}
+tasks.register('OctasphereTest', JavaExec) {
+    description = 'Runs the octasphere test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.OctasphereTest'
+}
+tasks.register('RainbowTest', JavaExec) {
+    description = 'Runs the rainbow test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.RainbowTest'
+}
+tasks.register('SpriteTest', JavaExec) {
+    description = 'Runs the sprite test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.SpriteTest'
+}
+tasks.register('TextureTest', JavaExec) {
+    description = 'Runs the texture test app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.test.TextureTest'
+}
+
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
+Boolean includeLinux = os.isLinux()
+Boolean includeMacOsX = os.isMacOsX()
+Boolean includeWindows = os.isWindows()
+
+tasks.withType(JavaExec).configureEach { // Java runtime options:
+    if (os.isMacOsX()) {
+        jvmArgs '-XstartOnFirstThread' // required for GLFW on macOS
+    }
+    classpath sourceSets.main.runtimeClasspath
+    enableAssertions = true
+    jvmArgs '-XX:+UseG1GC', '-XX:MaxGCPauseMillis=10'
+}
+
+dependencies {
+    implementation(libs.log4j.impl)
+    implementation(libs.oshi.core)
+
+    if (includeLinux) {
+        runtimeOnly(variantOf(libs.jolt.jni.linux64){ classifier(bft) })
+        runtimeOnly(variantOf(libs.jolt.jni.linux64fma){ classifier(bft) })
+
+        runtimeOnly(variantOf(libs.lwjgl){classifier("natives-linux")})
+        runtimeOnly(variantOf(libs.lwjgl.assimp){classifier("natives-linux")})
+        runtimeOnly(variantOf(libs.lwjgl.glfw){classifier("natives-linux")})
+        runtimeOnly(variantOf(libs.lwjgl.opengl){classifier("natives-linux")})
+
+        runtimeOnly(variantOf(libs.jolt.jni.linuxarm64){ classifier(bft) })
+
+        runtimeOnly(variantOf(libs.lwjgl){classifier("natives-linux-arm64")})
+        runtimeOnly(variantOf(libs.lwjgl.assimp){classifier("natives-linux-arm64")})
+        runtimeOnly(variantOf(libs.lwjgl.glfw){classifier("natives-linux-arm64")})
+        runtimeOnly(variantOf(libs.lwjgl.opengl){classifier("natives-linux-arm64")})
+    }
+
+    if (includeMacOsX) {
+        runtimeOnly(variantOf(libs.jolt.jni.macosx64){ classifier(bft) })
+
+        runtimeOnly(variantOf(libs.lwjgl){classifier("natives-macos")})
+        runtimeOnly(variantOf(libs.lwjgl.assimp){classifier("natives-macos")})
+        runtimeOnly(variantOf(libs.lwjgl.glfw){classifier("natives-macos")})
+        runtimeOnly(variantOf(libs.lwjgl.opengl){classifier("natives-macos")})
+
+        runtimeOnly(variantOf(libs.jolt.jni.macosxarm64){ classifier(bft) })
+
+        runtimeOnly(variantOf(libs.lwjgl){classifier("natives-macos-arm64")})
+        runtimeOnly(variantOf(libs.lwjgl.assimp){classifier("natives-macos-arm64")})
+        runtimeOnly(variantOf(libs.lwjgl.glfw){classifier("natives-macos-arm64")})
+        runtimeOnly(variantOf(libs.lwjgl.opengl){classifier("natives-macos-arm64")})
+    }
+
+    if (includeWindows) {
+        runtimeOnly(variantOf(libs.jolt.jni.windows64){ classifier(bft) })
+        runtimeOnly(variantOf(libs.jolt.jni.windows64avx2){ classifier(bft) })
+
+        runtimeOnly(variantOf(libs.lwjgl){classifier("natives-windows")})
+        runtimeOnly(variantOf(libs.lwjgl.assimp){classifier("natives-windows")})
+        runtimeOnly(variantOf(libs.lwjgl.glfw){classifier("natives-windows")})
+        runtimeOnly(variantOf(libs.lwjgl.opengl){classifier("natives-windows")})
+    }
+
+    //implementation 'com.github.stephengold:sport-jolt:' + sjVersion // for published library
+    implementation project(':library') // for latest sourcecode
+}
+
+// Register cleanup tasks:
+
+clean.dependsOn('cleanDLLs', 'cleanDyLibs', 'cleanLogs', 'cleanSOs')
+
+tasks.register('cleanDLLs', Delete) { // extracted Windows native libraries
+    delete fileTree(dir: '.', include: '*.dll')
+}
+tasks.register('cleanDyLibs', Delete) { // extracted macOS native libraries
+    delete fileTree(dir: '.', include: '*.dylib')
+}
+tasks.register('cleanLogs', Delete) { // JVM crash logs
+    delete fileTree(dir: '.', include: 'hs_err_pid*.log')
+}
+tasks.register('cleanSOs', Delete) { // extracted Linux and Android native libraries
+    delete fileTree(dir: '.', include: '*.so')
+}

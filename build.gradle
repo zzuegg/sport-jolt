@@ -13,6 +13,6 @@ configurations.configureEach {
 }
 
 tasks.register('checkstyle') {
-    dependsOn ':library:checkstyleMain'
+    dependsOn ':java-apps:checkstyleMain', ':library:checkstyleMain'
     description = 'Checks the style of all Java sourcecode.'
 }
