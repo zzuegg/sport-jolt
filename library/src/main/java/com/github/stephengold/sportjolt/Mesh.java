@@ -222,6 +222,20 @@ public class Mesh {
         this.positionBuffer = VertexBuffer.newInstance(
                 ShaderProgram.positionAttribName, positionsArray);
     }
+
+    /**
+     * Instantiate a mutable mesh with the specified topology and vertex
+     * positions, but no indices, colors, normals, or texture coordinates.
+     *
+     * @param topology an enum value (not null)
+     * @param positionsArray vertex positions (in mesh coordinates, not null,
+     * not empty)
+     */
+    public Mesh(Topology topology, Vector3fc... positionsArray) {
+        this(topology, positionsArray.length);
+        this.positionBuffer = VertexBuffer.newInstance(
+                ShaderProgram.positionAttribName, positionsArray);
+    }
     // *************************************************************************
     // new methods exposed
 
