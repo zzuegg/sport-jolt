@@ -2,6 +2,11 @@
 an [OpenGL]-based graphics engine
 for [the Jolt-JNI 3-D physics library][joltjni].
 
+It contains 2 subprojects:
+
+1. library: the Sport-Jolt graphics engine (a single JVM runtime library)
+2. java-apps: demos and non-automated test software in Java
+
 Complete source code (in [Java]) is provided under
 [a 3-clause BSD license][license].
 

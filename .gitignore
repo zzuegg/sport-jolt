@@ -2,8 +2,8 @@
 /.gradle/
 
 # Ignore Gradle's build output directories:
-/apps/build/
 /build/
+/java-apps/build/
 /library/build/
 
 # Ignore IDE-specific directories:
