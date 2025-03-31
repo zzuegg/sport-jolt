@@ -20,7 +20,7 @@ tasks.register('ThousandCubes', JavaExec) {
     mainClass = 'com.github.stephengold.sportjolt.javaapp.demo.ThousandCubes'
 }
 
-// non-physics tests apps in Java
+//   non-physics test apps in Java:
 tasks.register('AssimpTest', JavaExec) {
     description = 'Runs the Assimp test app.'
     mainClass = 'com.github.stephengold.sportjolt.javaapp.test.AssimpTest'

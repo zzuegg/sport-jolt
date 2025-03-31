@@ -173,8 +173,8 @@ final public class Validate {
      * @return {@code true} (for use in {@code assert} statements)
      * @throws IllegalArgumentException if the vector has a NaN or infinite
      * component
-     * @throws NullPointerException or IllegalArgumentException if the
-     * vector is {@code null}
+     * @throws NullPointerException or IllegalArgumentException if the vector is
+     * {@code null}
      */
     public static boolean finite(Vector3fc vector, String description) {
         nonNull(vector, description);

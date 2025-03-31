@@ -32,7 +32,7 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
 /**
- * Constants used in the LbjExamples project.
+ * Constants used in the Sport-Jolt project.
  *
  * @author Stephen Gold sgold@sonic.net
  */
