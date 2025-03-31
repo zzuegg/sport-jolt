@@ -41,6 +41,22 @@ final public class Constants {
     // constants
 
     /**
+     * Pi/2
+     */
+    final public static float halfPi = (float) (Math.PI / 2.);
+    /**
+     * 1/Pi
+     */
+    final public static float invPi = (float) (1. / Math.PI);
+    /**
+     * Pi/4
+     */
+    final public static float quarterPi = (float) (Math.PI / 4.);
+    /**
+     * 2*Pi
+     */
+    final public static float twoPi = (float) (2. * Math.PI);
+    /**
      * The opaque color black: (0, 0, 0).
      */
     final public static Vector4fc BLACK = new Vector4f(0f, 0f, 0f, 1f);
