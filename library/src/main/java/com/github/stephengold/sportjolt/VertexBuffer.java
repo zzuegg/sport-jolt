@@ -378,6 +378,26 @@ final public class VertexBuffer {
     }
 
     /**
+     * Create a mutable vertex buffer initialized from an array of vectors.
+     *
+     * @param attribName the name of the corresponding attrib variable in
+     * shaders (not null, not empty)
+     * @param vectors the initial data (not null, unaffected)
+     * @return a new buffer (not null)
+     */
+    static VertexBuffer newInstance(String attribName, Vector3fc... vectors) {
+        int fpv = Mesh.numAxes;
+        int numVertices = vectors.length;
+        VertexBuffer result = newInstance(attribName, fpv, numVertices);
+        for (Vector3fc vector : vectors) {
+            result.put(vector);
+        }
+        result.flip();
+
+        return result;
+    }
+
+    /**
      * Create a mutable normal buffer from a list of vertices.
      *
      * @param vertices the vertices to use (not null, unaffected)
