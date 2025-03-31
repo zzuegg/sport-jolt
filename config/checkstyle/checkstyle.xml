@@ -253,13 +253,13 @@
                      value="Interface type name ''{0}'' must match pattern ''{1}''."/>
         </module>
         <module name="LambdaParameterName">
-            <property name="format" value="^[a-z]{0,9}$"/>
+            <property name="format" value="^[a-z][A-Za-z]{0,10}$"/>
             <message key="name.invalidPattern"
                      value="Lambda parameter name ''{0}'' must match pattern ''{1}''."/>
         </module>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName">
-            <property name="format" value="^[a-z][a-zA-Z0-9]{0,19}$"/>
+            <property name="format" value="^[a-z][a-zA-Z0-9]{0,22}$"/>
             <message key="name.invalidPattern"
                      value="Local variable name ''{0}'' must match pattern ''{1}''."/>
         </module>
