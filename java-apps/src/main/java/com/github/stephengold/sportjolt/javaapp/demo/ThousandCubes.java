@@ -104,7 +104,7 @@ public class ThousandCubes extends BasePhysicsApp {
      */
     private static Geometry loop;
     /**
-     * randomize box colors
+     * generate random colors for boxes
      */
     final private static Random random = new Random();
     // *************************************************************************

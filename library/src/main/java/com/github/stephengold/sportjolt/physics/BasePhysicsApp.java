@@ -248,6 +248,7 @@ public abstract class BasePhysicsApp extends BaseApplication {
             result = meshCache.get(summary);
 
         } else {
+            //System.out.println("Generate mesh for " + shape.getSubType());
             MeshingStrategy strategy = summary.meshingStrategy();
             result = strategy.applyTo(shape);
             result.makeImmutable();
