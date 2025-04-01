@@ -25,10 +25,9 @@ Complete source code (in [Java]) is provided under
 
 ## About Sport Jolt
 
-Sport Jolt is a Simple Physics-ORienTed graphics engine for [Jolt JNI][joltjni],
-written in Java 11.
-In addition to Jolt JNI,
-it uses [LWJGL], [GLFW], [JOML], [jSnapLoader], and [OpenGL].
+Sport Jolt is a Simple Physics-ORienTed graphics engine written in Java 11.
+In addition to [Jolt JNI],
+it uses [LWJGL], [Assimp], [GLFW], [JOML], [jSnapLoader], and [OpenGL].
 It has been tested on [Linux], macOS, and Windows.
 
 [Jump to the table of contents](#toc)
@@ -36,7 +35,7 @@ It has been tested on [Linux], macOS, and Windows.
 
 <a name="add"></a>
 
-### Coding a Sport-Jolt application
+## Coding a Sport-Jolt application
 
 Every Sport-Jolt application should extend the `BasePhysicsApp` class,
 which provides hooks for:
@@ -52,7 +51,7 @@ called *geometries*.
 Instantiating a geometry automatically adds it to the list
 and causes it to be visualized.
 
-+ To visualize the world (physics-system) coordinate axes,
++ To visualize the world (system) coordinate axes,
   instantiate one or more `LocalAxisGeometry` objects.
 
 By default, physics objects are not visualized.
@@ -142,6 +141,7 @@ The world coordinate system is assumed to be Z-forward, Y-up.
 
 
 [adoptium]: https://adoptium.net/releases.html "Adoptium Project"
+[assimp]: https://www.assimp.org/ "The Open Asset Importer Library"
 [fish]: https://fishshell.com/ "Fish command-line shell"
 [git]: https://git-scm.com "Git"
 [glfw]: https://www.glfw.org "GLFW Library"
