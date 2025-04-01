@@ -101,7 +101,9 @@ By default, physics objects are not visualized.
   + using [Git]:
     + `git clone https://github.com/stephengold/sport-jolt.git`
     + `cd sport-jolt`
-4. Run the [Gradle] wrapper:
+    + `git checkout -b latest 0.9.0`
+4. (optional) Edit the "gradle.properties" file to configure the build.
+5. Run the [Gradle] wrapper:
   + using Bash or Fish or PowerShell or Zsh: `./gradlew build`
   + using Windows Command Prompt: `.\gradlew build`
 
