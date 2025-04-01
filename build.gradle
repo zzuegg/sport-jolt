@@ -1,9 +1,5 @@
 // Gradle script to build the Sport-Jolt project
 
-ext {
-    sjVersion = '0.9.0-SNAPSHOT'
-}
-
 subprojects {
     apply from: rootProject.file('common.gradle')
 }
