@@ -53,6 +53,7 @@ import com.github.stephengold.sportjolt.Constants;
 import com.github.stephengold.sportjolt.Geometry;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.TextureKey;
+import com.github.stephengold.sportjolt.Utils;
 import com.github.stephengold.sportjolt.input.InputProcessor;
 import com.github.stephengold.sportjolt.input.RotateMode;
 import com.github.stephengold.sportjolt.mesh.CrosshairsMesh;
@@ -141,7 +142,7 @@ public class ThousandCubes extends BasePhysicsApp {
      */
     @Override
     public PhysicsSystem createSystem() {
-        if (areAssertionsEnabled()) {
+        if (Utils.areAssertionsEnabled()) {
             System.out.println("Warning: assertions are enabled.");
         }
         if (Jolt.buildType().equals("Debug")) {
@@ -301,18 +302,6 @@ public class ThousandCubes extends BasePhysicsApp {
         loop = new Geometry(loopMesh)
                 .setColor(Constants.YELLOW)
                 .setProgram("Unshaded/Clipspace/Monochrome");
-    }
-
-    /**
-     * Test whether assertions are enabled.
-     *
-     * @return true if enabled, otherwise false
-     */
-    private static boolean areAssertionsEnabled() {
-        boolean enabled = false;
-        assert enabled = true; // Note: intentional side effect.
-
-        return enabled;
     }
 
     /**
