@@ -53,6 +53,10 @@ final public class Constants {
      */
     final public static float quarterPi = (float) (Math.PI / 4.);
     /**
+     * 0.5^0.5
+     */
+    final public static float rootHalf = (float) Math.sqrt(0.5);
+    /**
      * 2*Pi
      */
     final public static float twoPi = (float) (2. * Math.PI);
