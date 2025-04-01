@@ -148,6 +148,9 @@ public class ThousandCubes extends BasePhysicsApp {
         if (Jolt.buildType().equals("Debug")) {
             System.out.println("Warning: using a Debug native library.");
         }
+        if (Jolt.isDoublePrecision()) {
+            System.out.println("Warning: using a Dp native library.");
+        }
 
         // Use 2 broadphase layers for efficiency:
         int numBpLayers = 2;
