@@ -1,4 +1,4 @@
-# release log for the Sport-jolt Library
+# release log for the Sport-Jolt Library
 
 ## Version 0.9.0 released on 31 March 2025
 
