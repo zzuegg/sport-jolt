@@ -8,7 +8,20 @@ plugins {
     id 'application' // to build JVM applications
 }
 
+application {
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.AppChooser'
+}
+if (!hasProperty('mainClass')) {
+    ext.mainClass = application.mainClass
+}
+jar.manifest.attributes('Main-Class': application.mainClass)
+
 // Register tasks to run specific applications:
+
+tasks.register('AppChooser', JavaExec) {
+    description = 'Runs the AppChooser app.'
+    mainClass = 'com.github.stephengold.sportjolt.javaapp.AppChooser'
+}
 
 //   physics demos in Java:
 tasks.register('Pachinko', JavaExec) {

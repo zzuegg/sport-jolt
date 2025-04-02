@@ -12,3 +12,9 @@ tasks.register('checkstyle') {
     dependsOn ':java-apps:checkstyleMain', ':library:checkstyleMain'
     description = 'Checks the style of all Java sourcecode.'
 }
+
+// tasks for the convenience of NetBeans users:
+tasks.register('AppChooser') {
+    dependsOn ':java-apps:AppChooser'
+    description = 'Runs the AppChooser app.'
+}
