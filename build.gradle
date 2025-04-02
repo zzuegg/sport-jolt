@@ -18,3 +18,15 @@ tasks.register('AppChooser') {
     dependsOn ':java-apps:AppChooser'
     description = 'Runs the AppChooser app.'
 }
+tasks.register('AssimpTest') {
+    dependsOn ':java-apps:AssimpTest'
+    description = 'Runs the Assimp test app.'
+}
+tasks.register('Pachinko') {
+    dependsOn ':java-apps:Pachinko'
+    description = 'Runs the Pachinko demo app.'
+}
+tasks.register('ThousandCubes') {
+    dependsOn ':java-apps:ThousandCubes'
+    description = 'Runs the ThousandCubes demo app.'
+}
