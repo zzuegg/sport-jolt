@@ -268,11 +268,11 @@ public class ThousandCubes extends BasePhysicsApp {
     // private methods
 
     /**
-     * Add a dynamic box to the space, at the specified coordinates.
+     * Add a dynamic box to the system, at the specified coordinates.
      *
-     * @param x the desired X coordinate (in physics space)
-     * @param y the desired Y coordinate (in physics space)
-     * @param z the desired Z coordinate (in physics space)
+     * @param x the desired X coordinate (in system coordinates)
+     * @param y the desired Y coordinate (in system coordinates)
+     * @param z the desired Z coordinate (in system coordinates)
      */
     private void addBox(float x, float y, float z) {
         // Create and add a box:
