@@ -35,7 +35,7 @@ import com.github.stephengold.joltjni.Jolt;
 import com.github.stephengold.joltjni.JoltPhysicsObject;
 import com.github.stephengold.joltjni.PhysicsSystem;
 import com.github.stephengold.joltjni.TempAllocator;
-import com.github.stephengold.joltjni.TempAllocatorImpl;
+import com.github.stephengold.joltjni.TempAllocatorMalloc;
 import com.github.stephengold.joltjni.VehicleConstraint;
 import com.github.stephengold.joltjni.enumerate.EShapeSubType;
 import com.github.stephengold.joltjni.readonly.ConstBody;
@@ -475,7 +475,7 @@ public abstract class BasePhysicsApp extends BaseApplication {
      */
     @Override
     protected void initialize() {
-        this.tempAllocator = new TempAllocatorImpl(150 * 1024 * 1024);
+        this.tempAllocator = new TempAllocatorMalloc();
         this.jobSystem = new JobSystemThreadPool(Jolt.cMaxPhysicsJobs,
                 Jolt.cMaxPhysicsBarriers, numWorkerThreads);
         this.physicsSystem = createSystem();
