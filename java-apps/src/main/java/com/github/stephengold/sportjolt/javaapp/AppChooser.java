@@ -55,9 +55,11 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 /**
- * Choose a Sport Jolt application to run.
+ * Choose a Sport-Jolt application to run.
  */
 final class AppChooser extends JFrame {
+    // *************************************************************************
+    // new methods exposed
 
     /**
      * Main entry point for the AppChooser application.
@@ -86,6 +88,8 @@ final class AppChooser extends JFrame {
 
         new AppChooser(apps);
     }
+    // *************************************************************************
+    // private methods
 
     /**
      * Select and run one Jolt-Sport app from the specified list.
