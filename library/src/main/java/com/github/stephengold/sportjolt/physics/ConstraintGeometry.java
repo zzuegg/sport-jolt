@@ -47,6 +47,8 @@ import com.github.stephengold.sportjolt.Geometry;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.Validate;
 import com.github.stephengold.sportjolt.mesh.ArrowMesh;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.joml.Vector4fc;
 
 /**
@@ -125,11 +127,11 @@ public class ConstraintGeometry extends Geometry {
             Vec3 direction = offset.toVec3();
             direction.scaleInPlace(1f / length);
             QuatArg rotation = Quat.sFromTo(Vec3.sAxisZ(), direction);
-            setOrientation(rotation);
+            setOrientation(new Quaternionf(rotation.getX(),rotation.getY(),rotation.getZ(),rotation.getW()));
         }
 
         RVec3Arg location = comToWorld.getTranslation();
-        setLocation(location);
+        setLocation(new Vector3f(location.x(), location.y(), location.z()));
 
         super.updateAndRender();
     }

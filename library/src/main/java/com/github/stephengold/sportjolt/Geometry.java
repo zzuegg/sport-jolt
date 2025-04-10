@@ -38,12 +38,8 @@ import com.github.stephengold.joltjni.readonly.QuatArg;
 import com.github.stephengold.joltjni.readonly.RVec3Arg;
 import com.github.stephengold.joltjni.readonly.Vec3Arg;
 import java.nio.FloatBuffer;
-import org.joml.Quaternionf;
-import org.joml.Quaternionfc;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
-import org.joml.Vector4f;
-import org.joml.Vector4fc;
+
+import org.joml.*;
 import org.lwjgl.opengl.GL11C;
 
 /**
@@ -85,7 +81,7 @@ public class Geometry {
     /**
      * temporary storage for a transform matrix
      */
-    final private RMat44 tm = new RMat44();
+    final private Matrix4f tm = new Matrix4f();
     /**
      * rendering program
      */
@@ -150,13 +146,13 @@ public class Geometry {
      * instance, not null)
      */
     public Vector3f copyScale(Vector3f storeResult) {
-        Vec3 scale = meshToWorld.getScale(); // alias
+        Vector3f scale = meshToWorld.getScale(); // alias
         Vector3f result;
         if (storeResult == null) {
-            result = new Vector3f(scale.getX(), scale.getY(), scale.getZ());
+            result = new Vector3f(scale);
         } else {
             result = storeResult;
-            result.set(scale.getX(), scale.getY(), scale.getZ());
+            result.set(scale);
         }
 
         return result;
@@ -169,14 +165,14 @@ public class Geometry {
      * @return a vector of scale factors (either {@code storeResult} or a new
      * instance, not null)
      */
-    public Vec3 copyScaleJme(Vec3 storeResult) {
-        Vec3 scale = meshToWorld.getScale(); // alias
+    public Vector3f copyScaleJme(Vector3f storeResult) {
+        Vector3f scale = meshToWorld.getScale(); // alias
         if (storeResult == null) {
-            scale = new Vec3(scale);
+            storeResult = new Vector3f(scale);
         } else {
             storeResult.set(scale);
         }
-        return scale;
+        return storeResult;
     }
 
     /**
@@ -252,27 +248,13 @@ public class Geometry {
      * new vector, not null)
      */
     public Vector3f location(Vector3f storeResult) {
-        RVec3Arg location = meshToWorld.getTranslation(); // alias
-        Vector3f result = Utils.toJomlVector(location);
-        return result;
-    }
-
-    /**
-     * Copy the location of the mesh origin.
-     *
-     * @param storeResult storage for the result (modified if not null)
-     * @return a location vector in worldspace (either {@code storeResult} or a
-     * new vector, not null)
-     */
-    public RVec3Arg locationJme(RVec3 storeResult) {
-        RVec3Arg location = meshToWorld.getTranslation(); // alias
-        if (storeResult == null) {
-            location = new RVec3(location);
-        } else {
+        Vector3f location = meshToWorld.getTranslation(); // alias
+        if(storeResult == null){
+            storeResult = new Vector3f(location);
+        }else{
             storeResult.set(location);
         }
-
-        return location;
+        return storeResult;
     }
 
     /**
@@ -280,23 +262,11 @@ public class Geometry {
      *
      * @param offset the offset (in worldspace, not null, finite, unaffected)
      */
-    public void move(Vec3 offset) {
+    public void move(Vector3f offset) {
         Validate.finite(offset, "offset");
 
-        RVec3 location = meshToWorld.getTranslation(); // alias
-        location.addInPlace(offset.getX(), offset.getY(), offset.getZ());
-    }
-
-    /**
-     * Translate by the specified offset without changing the orientation.
-     *
-     * @param offset the offset (in worldspace, not null, finite, unaffected)
-     */
-    public void move(Vector3fc offset) {
-        Validate.finite(offset, "finite offset");
-
-        RVec3 location = meshToWorld.getTranslation(); // alias
-        location.addInPlace(offset.x(), offset.y(), offset.z());
+        Vector3f location = meshToWorld.getTranslation(); // alias
+        location.add(offset);
     }
 
     /**
@@ -307,11 +277,11 @@ public class Geometry {
      * quaternion)
      */
     public Quaternionf orientation(Quaternionf storeResult) {
-        Quat orientation = meshToWorld.getRotation(); // alias
-        float x = orientation.getX();
-        float y = orientation.getY();
-        float z = orientation.getZ();
-        float w = orientation.getW();
+        Quaternionf orientation = meshToWorld.getRotation(); // alias
+        float x = orientation.x();
+        float y = orientation.y();
+        float z = orientation.z();
+        float w = orientation.w();
 
         if (storeResult == null) {
             return new Quaternionf(x, y, z, w);
@@ -327,10 +297,10 @@ public class Geometry {
      * @return a unit quaternion (either {@code storeResult} or a new
      * quaternion)
      */
-    public Quat orientationJme(Quat storeResult) {
-        Quat orientation = meshToWorld.getRotation(); // alias
+    public Quaternionf orientationJme(Quaternionf storeResult) {
+        Quaternionf orientation = meshToWorld.getRotation(); // alias
         if (storeResult == null) {
-            return new Quat(orientation);
+            return new Quaternionf(orientation);
         } else {
             storeResult.set(orientation);
             return storeResult;
@@ -369,12 +339,9 @@ public class Geometry {
      * @return the (modified) current geometry (for chaining)
      */
     public Geometry rotate(float angle, float x, float y, float z) {
-        Vec3 axis = new Vec3(x, y, z); // TODO garbage
-        Quat q = Quat.sRotation(axis, angle);
-        QuatArg rotation = meshToWorld.getRotation(); // alias
-        QuatArg product = Op.star(q, rotation);
-        q.set(product);
-
+        Quaternionf q = new Quaternionf().fromAxisAngleRad(x,y,z,angle);
+        Quaternionf rotation = meshToWorld.getRotation(); // alias
+        rotation.mul(q);
         return this;
     }
 
@@ -385,7 +352,7 @@ public class Geometry {
      * @return the (modified) current geometry (for chaining)
      */
     public Geometry scale(float factor) {
-        meshToWorld.getScale().scaleInPlace(factor, factor, factor);
+        meshToWorld.getScale().mul(factor, factor, factor);
         return this;
     }
 
@@ -474,24 +441,12 @@ public class Geometry {
      * unaffected, default=(0,0,0))
      * @return the (modified) current geometry (for chaining)
      */
-    public Geometry setLocation(RVec3Arg location) {
+    public Geometry setLocation(Vector3f location) {
         Validate.finite(location, "location");
         meshToWorld.setTranslation(location);
         return this;
     }
 
-    /**
-     * Translate the mesh origin to the specified location.
-     *
-     * @param location the desired location (in worldspace, not null, finite,
-     * unaffected, default=(0,0,0))
-     * @return the (modified) current geometry (for chaining)
-     */
-    public Geometry setLocation(Vec3Arg location) {
-        Validate.finite(location, "location");
-        meshToWorld.setTranslation(location);
-        return this;
-    }
 
     /**
      * Translate the mesh origin to the specified location.
@@ -532,10 +487,9 @@ public class Geometry {
         Validate.finite(xAngle, "x angle");
         Validate.finite(xAngle, "y angle");
         Validate.finite(xAngle, "z angle");
-
         Quat orientation
                 = Quat.sEulerAngles(xAngle, yAngle, zAngle); // TODO garbage
-        meshToWorld.setRotation(orientation);
+        meshToWorld.setRotation(new Quaternionf(orientation.getX(),orientation.getY(),orientation.getZ(),orientation.getW()));
 
         return this;
     }
@@ -556,10 +510,7 @@ public class Geometry {
         Validate.inRange(x, "x", -1f, 1f);
         Validate.inRange(y, "y", -1f, 1f);
         Validate.inRange(z, "z", -1f, 1f);
-
-        Vec3 axis = new Vec3(x, y, z);
-        Quat orientation = Quat.sRotation(axis, angle);
-        meshToWorld.getRotation().set(orientation);
+        meshToWorld.getRotation().set(new Quaternionf().fromAxisAngleRad(x,y,z,angle));
 
         return this;
     }
@@ -571,11 +522,8 @@ public class Geometry {
      * unaffected)
      * @return the (modified) current geometry (for chaining)
      */
-    public Geometry setOrientation(QuatArg orientation) {
-        Validate.nonZero(orientation, "orientation");
-
-        QuatArg q = orientation.normalized();
-        meshToWorld.setRotation(q);
+    public Geometry setOrientation(Quaternionf orientation) {
+        meshToWorld.setRotation(orientation);
 
         return this;
     }
@@ -641,7 +589,7 @@ public class Geometry {
      * null, finite, unaffected, default=(1,1,1))
      * @return the (modified) current geometry (for chaining)
      */
-    public Geometry setScale(Vec3Arg scaleFactors) {
+    public Geometry setScale(Vector3f scaleFactors) {
         Validate.finite(scaleFactors, "scale factors");
         meshToWorld.setScale(scaleFactors);
         return this;
@@ -696,6 +644,14 @@ public class Geometry {
     public Geometry setWireframe(boolean newSetting) {
         this.wireframe = newSetting;
         return this;
+    }
+
+    public void setLocation(Vec3Arg location){
+        this.setLocation(new Vector3f(location.getX(), location.getY(), location.getZ()));
+    }
+
+    public void setScale(Vec3Arg scale){
+        this.setScale(new Vector3f(scale.getX(), scale.getY(), scale.getZ()));
     }
 
     /**
@@ -784,11 +740,10 @@ public class Geometry {
      * @param storeBuffer the buffer to modify (not null)
      */
     void writeRotationMatrix(FloatBuffer storeBuffer) {
-        QuatArg rotation = meshToWorld.getRotation(); // alias
-        tm.set(RMat44.sRotation(rotation));
-
+        tm.identity();
+        tm.rotate(meshToWorld.getRotation());
         int startPosition = storeBuffer.position();
-        tm.put3x3ColumnMajor(storeBuffer);
+        tm.get3x3(new Matrix3f()).get(storeBuffer);
         storeBuffer.position(startPosition);
     }
 
@@ -803,7 +758,7 @@ public class Geometry {
         meshToWorld.toTransformMatrix(tm);
 
         int startPosition = storeBuffer.position();
-        tm.putColumnMajor(storeBuffer);
+        tm.get(storeBuffer);
         storeBuffer.position(startPosition);
     }
     // *************************************************************************

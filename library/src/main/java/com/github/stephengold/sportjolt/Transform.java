@@ -35,6 +35,9 @@ import com.github.stephengold.joltjni.Vec3;
 import com.github.stephengold.joltjni.readonly.QuatArg;
 import com.github.stephengold.joltjni.readonly.RVec3Arg;
 import com.github.stephengold.joltjni.readonly.Vec3Arg;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 /**
  * A 3-D coordinate transform composed of translation, rotation, and scaling.
@@ -49,15 +52,15 @@ final public class Transform {
     /**
      * rotation component
      */
-    final private Quat rotation = new Quat();
+    final private Quaternionf rotation = new Quaternionf();
     /**
      * translation component, an offset for each local axis
      */
-    final private RVec3 translation = new RVec3();
+    final private Vector3f translation = new Vector3f();
     /**
      * scaling component, a scale factor for each local axis
      */
-    final private Vec3 scaling = Vec3.sOne();
+    final private Vector3f scaling = new Vector3f(1f, 1f, 1f);
     // *************************************************************************
     // constructors
 
@@ -75,7 +78,7 @@ final public class Transform {
      *
      * @return the pre-existing instance (not null)
      */
-    public Quat getRotation() {
+    public Quaternionf getRotation() {
         return rotation;
     }
 
@@ -84,7 +87,7 @@ final public class Transform {
      *
      * @return the pre-existing instance (not null)
      */
-    public Vec3 getScale() {
+    public Vector3f getScale() {
         return scaling;
     }
 
@@ -93,7 +96,7 @@ final public class Transform {
      *
      * @return the pre-existing instance (not null)
      */
-    public RVec3 getTranslation() {
+    public Vector3f getTranslation() {
         return translation;
     }
 
@@ -102,9 +105,9 @@ final public class Transform {
      * scaling=(1,1,1) rotation=(0,0,0,1).
      */
     public void loadIdentity() {
-        rotation.loadIdentity();
-        scaling.loadOne();
-        translation.loadZero();
+        rotation.identity();
+        scaling.set(1f, 1f, 1f);
+        translation.set(0f, 0f, 0f);
     }
 
     /**
@@ -113,7 +116,7 @@ final public class Transform {
      * @param rotation the desired rotation (not null, unaffected,
      * default=(0,0,0,1))
      */
-    public void setRotation(QuatArg rotation) {
+    public void setRotation(Quaternionf rotation) {
         this.rotation.set(rotation);
     }
 
@@ -132,19 +135,10 @@ final public class Transform {
      * @param factors the desired scaling (not null, unaffected,
      * default=(1,1,1))
      */
-    public void setScale(Vec3Arg factors) {
+    public void setScale(Vector3f factors) {
         scaling.set(factors);
     }
 
-    /**
-     * Copy the argument to the translation component.
-     *
-     * @param offsets the desired offsets (not null, unaffected,
-     * default=(0,0,0))
-     */
-    public void setTranslation(RVec3Arg offsets) {
-        translation.set(offsets);
-    }
 
     /**
      * Copy the argument to the translation component.
@@ -152,7 +146,7 @@ final public class Transform {
      * @param offsets the desired offsets (not null, unaffected,
      * default=(0,0,0))
      */
-    public void setTranslation(Vec3Arg offsets) {
+    public void setTranslation(Vector3f offsets) {
         translation.set(offsets);
     }
 
@@ -161,9 +155,9 @@ final public class Transform {
      *
      * @param storeResult storage for the result (not null, modified)
      */
-    public void toRotationMatrix(RMat44 storeResult) {
-        RMat44 matrix = RMat44.sRotation(rotation);
-        storeResult.set(matrix);
+    public void toRotationMatrix(Matrix4f storeResult) {
+        storeResult.identity();
+        storeResult.rotate(rotation);
     }
 
     /**
@@ -171,12 +165,11 @@ final public class Transform {
      *
      * @param storeResult storage for the result (not null, modified)
      */
-    public void toTransformMatrix(RMat44 storeResult) {
-        RMat44 r = RMat44.sRotation(rotation);
-        RMat44 s = RMat44.sScale(scaling);
-        RMat44 t = RMat44.sTranslation(translation);
-        RMat44 result = RMat44.product(t, r, s);
-        storeResult.set(result);
+    public void toTransformMatrix(Matrix4f storeResult) {
+        storeResult.identity();
+        storeResult.translate(translation);
+        storeResult.rotate(rotation);
+        storeResult.scale(scaling);
     }
     // *************************************************************************
     // Object methods

@@ -41,6 +41,8 @@ import com.github.stephengold.sportjolt.Constants;
 import com.github.stephengold.sportjolt.Geometry;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.Validate;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.joml.Vector4fc;
 
 /**
@@ -170,10 +172,10 @@ public class CharacterVirtualShapeGeometry extends Geometry {
     private void updateTransform() {
         ConstCharacterVirtual ccv = character.getPtr();
         RVec3Arg location = ccv.getCenterOfMassPosition();
-        setLocation(location);
+        setLocation(new Vector3f(location.x(), location.y(), location.z()));
 
         QuatArg orientation = ccv.getRotation();
-        setOrientation(orientation);
+        setOrientation(new Quaternionf(orientation.getX(), orientation.getY(), orientation.getZ(), orientation.getW()));
 
         setScale(1f);
     }

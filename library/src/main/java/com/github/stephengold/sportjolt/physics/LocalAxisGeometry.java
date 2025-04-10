@@ -44,6 +44,8 @@ import com.github.stephengold.sportjolt.Geometry;
 import com.github.stephengold.sportjolt.Mesh;
 import com.github.stephengold.sportjolt.Validate;
 import com.github.stephengold.sportjolt.mesh.ArrowMesh;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.joml.Vector4fc;
 
 /**
@@ -161,26 +163,26 @@ public class LocalAxisGeometry extends Geometry {
             RMat44Arg matrix = body.getCenterOfMassTransform();
 
             RVec3Arg location = matrix.getTranslation();
-            setLocation(location);
+            setLocation(new Vector3f(location.x(), location.y(), location.z()));
 
             QuatArg orientation = matrix.getQuaternion();
-            setOrientation(orientation);
+            setOrientation(new Quaternionf(orientation.getX(),orientation.getY(),orientation.getZ(),orientation.getW()));
 
         } else if (jpo instanceof ConstCharacter) {
             ConstCharacter character = (ConstCharacter) jpo;
             RVec3Arg location = character.getCenterOfMassPosition();
-            setLocation(location);
+            setLocation(new Vector3f(location.x(), location.y(), location.z()));
 
             QuatArg orientation = character.getRotation();
-            setOrientation(orientation);
+            setOrientation(new Quaternionf(orientation.getX(),orientation.getY(),orientation.getZ(),orientation.getW()));
 
         } else if (jpo instanceof ConstCharacterVirtual) {
             ConstCharacterVirtual character = (ConstCharacterVirtual) jpo;
             RVec3Arg location = character.getCenterOfMassPosition();
-            setLocation(location);
+            setLocation(new Vector3f(location.x(), location.y(), location.z()));
 
             QuatArg orientation = character.getRotation();
-            setOrientation(orientation);
+            setOrientation(new Quaternionf(orientation.getX(),orientation.getY(),orientation.getZ(),orientation.getW()));
 
         } else {
             throw new IllegalStateException(jpo.getClass().getSimpleName());

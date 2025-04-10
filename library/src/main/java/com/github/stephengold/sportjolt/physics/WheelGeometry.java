@@ -40,6 +40,8 @@ import com.github.stephengold.sportjolt.BaseApplication;
 import com.github.stephengold.sportjolt.Geometry;
 import com.github.stephengold.sportjolt.Validate;
 import com.github.stephengold.sportjolt.mesh.WheelMesh;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 /**
  * Visualize one of the wheels of a vehicle.
@@ -125,10 +127,10 @@ public class WheelGeometry extends Geometry {
         RMat44Arg transform = vehicle.getWheelWorldTransform(
                 wheelIndex, Vec3.sAxisX(), Vec3.sAxisY());
         RVec3Arg location = transform.getTranslation();
-        setLocation(location);
+        setLocation(new Vector3f(location.x(), location.y(), location.z()));
 
         QuatArg orientation = transform.getQuaternion();
-        setOrientation(orientation);
+        setOrientation(new Quaternionf(orientation.getX(),orientation.getY(),orientation.getZ(),orientation.getW()));
 
         Wheel wheel = vehicle.getWheel(wheelIndex);
         ConstWheelSettings settings = wheel.getSettings();
